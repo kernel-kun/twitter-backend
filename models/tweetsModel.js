@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const tweetSchema = new Schema({
+	// No need to add `_id` field as it gets created by default
     text: {
         type: String,
         required: true,

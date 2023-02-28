@@ -3,6 +3,7 @@ import { isEmail } from 'validator';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+	// No need to add `_id` field as it gets created by default
 	username: {
 		type: String,
 		required: [true, "Please provide a Username"],
