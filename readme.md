@@ -14,8 +14,7 @@ An in-depth paragraph about your project and overview of use.
 * ex. Windows 10
 
 ### Installing
-
-* Installing dependencies
+* Installing dependencies : 
 ```yarn install```
 * Start the server in:
     > Dev Mode  
@@ -66,3 +65,6 @@ Inspiration, code snippets, etc.
 * [dbader](https://github.com/dbader/readme-template)
 * [zenorocha](https://gist.github.com/zenorocha/4526327)
 * [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+
+Custom validator message syntax
+https://mongoosejs.com/docs/validation.html#custom-error-messages

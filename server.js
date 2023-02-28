@@ -1,9 +1,18 @@
 const express = require("express");
-// Import Middlewares
+
+// ----------------------
+// - Import Middlewares -
+// ----------------------
+
+// Development Middlewares
+if(process.env.NODE_ENV == "development"){
+
+}
+// Production Middlewares
+require('dotenv').config();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require('helmet');
-require('dotenv').config();
 
 const PORT = process.env.PORT || 8000       // either define a custom port or use 8000
 const DB_URL = process.env.DB_URL           // MongoDB login url already embedded with password
@@ -16,17 +25,15 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cors({
     origin: "*"
 }));
-// Increase security by using http headers
+// Increase security by adding http headers
 app.use(helmet());
 
 // Routes
-app.use()
-app.use()
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 
-mongoose.connect(DB_URL, {
-    NewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(DB_URL)
     .then(() => {
         console.log("MongoDB successfully connected");
         // Once DB is connected then -> start listening to server
