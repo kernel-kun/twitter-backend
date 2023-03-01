@@ -22,10 +22,10 @@ const userSchema = new Schema({
 		minlength: [8, 'Password must be at least 8 characters.'],
 		trim: true
 	},
-	tweets: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Tweet'
-	}],
+	// tweets: [{
+	// 	type: Schema.Types.ObjectId,
+	// 	ref: 'Tweet'
+	// }],
 	role: {
 		type: String,
 		enum: ['user', 'admin'],

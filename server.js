@@ -4,15 +4,20 @@ const express = require("express");
 // - Import Middlewares -
 // ----------------------
 
-// Development Middlewares
+// ↓ Development Middlewares ↓
 if(process.env.NODE_ENV == "development"){
 
 }
-// Production Middlewares
+// ↓ Production Middlewares ↓
 require('dotenv').config();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require('helmet');
+
+// Import Routes
+const authRoute = require('./routes/auth');
+const usersRoute = require('./routes/users');
+const tweetsRoute = require('./routes/tweets');
 
 const PORT = process.env.PORT || 8000       // either define a custom port or use 8000
 const DB_URL = process.env.DB_URL           // MongoDB login url already embedded with password
@@ -30,9 +35,13 @@ app.use(helmet());
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('This page needs to be documented');
 });
+app.use('/auth', authRoute);
+app.use('/users', usersRoute);
+app.use('/tweets', tweetsRoute);
 
+// connect MongoDB -> then start server
 mongoose.connect(DB_URL)
     .then(() => {
         console.log("MongoDB successfully connected");
