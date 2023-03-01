@@ -71,10 +71,14 @@ https://mongoosejs.com/docs/validation.html#custom-error-messages
 
 ## References:  
 
-### JWT  
+### Authentication
+#### JWT  
 - https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
 - https://www.simplilearn.com/tutorials/nodejs-tutorial/jwt-in-express-js
 - https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6
+
+#### BCrypt
+- https://levelup.gitconnected.com/using-bcrypt-to-hash-and-compare-passwords-with-nodejs-and-mongodb-366ff80138b7
 
 ### Validation  
 - https://auth0.com/blog/express-validator-tutorial/
@@ -124,3 +128,25 @@ https://mongoosejs.com/docs/validation.html#custom-error-messages
 		`api/tweets/:id`		GET, PATCH, DELETE	(Read, Update, Detele a specific tweet)
 	We need to find(GET) all tweets by a single user. What are possible routes you can make?
         
+
+## TODO:
+- implement functionality
+	- like
+	- retweet
+	- forgot password
+		- email codes for reset
+		- magic email for reset
+	- login ways
+		- JWT
+			- logout blacklist functionality
+		- OAuth
+		- Magic email link
+	- using SuperAdmin to make new admins
+	- schema (create nested documents)
+		- users(username, email, password, role, superadmin)
+			- profile(age, first+last name, profileimg, bio, address, etc.)
+		- tweets()
+			- array of jsons containing who reacted + type of reaction
+- different branch
+	- using MongoDB
+	- using SQL DB with UUID's as primary keys
