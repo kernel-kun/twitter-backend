@@ -59,12 +59,14 @@ exports.login = async (req, res) => {
 
         // Define payload data for JWT
         const jwt_data = {
-            id: user._id,
+            id: user.id,
             username: user.username,
             email: user.email
         }
         // Generate a token
         const token = signToken(jwt_data);
+        //ifenv
+        console.log("JWT Payload Data:\n", jwt_data)
         // Set the token in the Authorization header of the response
         res.set('Authorization', `Bearer ${token}`);
         // Send response with token in Authorization header
