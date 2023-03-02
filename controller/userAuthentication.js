@@ -12,7 +12,7 @@ const signToken = (data) => {
 };
 
 // SignUp Logic
-exports.signUp = (req, res, next) => {
+exports.signup = (req, res) => {
     // Check if passwords match
     if (req.body.password === req.body.passwordConfirm) {
         //Hash the password
@@ -20,14 +20,14 @@ exports.signUp = (req, res, next) => {
         bcrypt.hash(req.body.password, saltRounds)
             .then(result => {
                 const newUser = new User({
-                    username: req.body.name,
+                    username: req.body.username,
                     email: req.body.email,
                     password: result
                 });
                 // Find if user already exists
                 User.findOne({ email: req.body.email })
                     .then(result => {
-                        if (result.length === 0) {
+                        if (!result || result.length === 0) {
                             newUser.save()
                                 .then(result => res.status(201).json({ message: 'User Signup Successful!', userDetails: result }))
                                 .catch(err => res.status(500).json({ message: 'Error occured in the DB', error: err }))
@@ -44,7 +44,7 @@ exports.signUp = (req, res, next) => {
 };
 
 // Login Logic
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         // Check if Email or Password are empty
@@ -65,7 +65,10 @@ exports.login = async (req, res, next) => {
         }
         // Generate a token
         const token = signToken(jwt_data);
-        res.status(200).json({ status: "success", jwt_token: token });
+        // Set the token in the Authorization header of the response
+        res.set('Authorization', `Bearer ${token}`);
+        // Send response with token in Authorization header
+        res.status(200).json({ status: "Logged in successfully", jwt_token: token });
     } catch (err) {
         console.log(err);
     }
@@ -75,7 +78,7 @@ exports.login = async (req, res, next) => {
 exports.verifyToken = async (req, res, next) => {
     try {
         let token;
-        if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
+        if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
             token = req.headers.authorization.split(" ")[1];
         }
         if (!token)
@@ -92,7 +95,7 @@ exports.verifyToken = async (req, res, next) => {
                 status: "fail",
                 message: "The user belonging to this token no longer exist",
             });
-        
+
         req.user = decoded;
         console.log("🚀 ~ file: userAuthentication.js:97 ~ exports.verifyToken= ~ decoded:", decoded)
         next();
