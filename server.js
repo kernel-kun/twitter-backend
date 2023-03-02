@@ -5,9 +5,9 @@ const express = require("express");
 // ----------------------
 
 // ↓ Development Middlewares ↓
-if(process.env.NODE_ENV == "development"){
+// if(process.env.NODE_ENV == "development"){
 
-}
+// }
 // ↓ Production Middlewares ↓
 require('dotenv').config();
 const mongoose = require("mongoose");
@@ -32,14 +32,19 @@ app.use(cors({
 }));
 // Increase security by adding http headers
 app.use(helmet());
+// Ignore Mongoose DeprecationWarning
+mongoose.set('strictQuery', false);
 
-// Routes
+
+// --------------
+// --- Routes ---
+// --------------
 app.get('/', (req, res) => {
     res.send('This page needs to be documented');
 });
 app.use('/auth', authRoute);
-app.use('/users', usersRoute);
-app.use('/tweets', tweetsRoute);
+// app.use('/tweets', tweetsRoute);
+// app.use('/users', usersRoute);
 
 // connect MongoDB -> then start server
 mongoose.connect(DB_URL)
