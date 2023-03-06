@@ -13,15 +13,15 @@ An in-depth paragraph about your project and overview of use.
 * Describe any prerequisites, libraries, OS version, etc., needed before installing program.
 * ex. Windows 10
 
-### Installing
-* Installing dependencies : 
-```yarn install```
-* Start the server in:
-    > Dev Mode  
-    ```yarn run dev```
+### Installation  
 
-    > Production Mode  
-    ```yarn start```
+1. Install _package.json_ dependencies : `yarn install`
+
+2. Start the server in:
+	|_Enviroment Type_	|_Command_ 		|
+	| - 				| - 			|
+	|Dev Mode 			|`yarn run dev`	|
+	|Production Mode 	|`yarn start` 	|
 
 ### Executing program
 
@@ -91,7 +91,6 @@ https://mongoosejs.com/docs/validation.html#custom-error-messages
 ### Postman  
 - [Set JWT Header as Variable](https://stackoverflow.com/questions/42372488/saving-a-postman-header-value-into-a-variable-throughout-requests-in-a-collectio)
 - [Automatically set JWT Header received in response as Authorization for subsequent requests](https://community.postman.com/t/how-to-automatically-set-new-tokens-value-as-a-dynamic-variable-and-use-this-variable-in-my-collection-of-requests/19163/4)
-- https://www.softwaretestingmaterial.com/how-to-send-jwt-token-as-header/
 
 ### git  
 #### Merge Conflicts  
@@ -131,13 +130,15 @@ https://mongoosejs.com/docs/validation.html#custom-error-messages
 
 ## TODO:
 - implement functionality
+	- replace all `ifenv` with node.env if statement
 	- like
-	- retweet
+	- retweet + share using shortened URL
 	- forgot password
 		- email codes for reset
 		- magic email for reset
 	- login ways
 		- JWT
+			- verify using email code/link
 			- logout blacklist functionality
 		- OAuth
 		- Magic email link
