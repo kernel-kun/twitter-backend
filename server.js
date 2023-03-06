@@ -5,7 +5,7 @@ const express = require("express");
 // ----------------------
 
 // ↓ Development Middlewares ↓
-// if(process.env.NODE_ENV == "development"){
+// if(process.env.IS_DEV_ENV === "true"){
 
 // }
 // ↓ Production Middlewares ↓
@@ -28,7 +28,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 // Enable CORS
 app.use(cors({
-    origin: "*"
+    origin: "*",
+    exposedHeaders: 'Authorization'
 }));
 // Increase security by adding http headers
 app.use(helmet());
