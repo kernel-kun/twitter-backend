@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }))
 // Enable CORS
 app.use(cors({
     origin: "*",
-    exposedHeaders: 'Authorization'
+    // exposedHeaders: 'Authorization'
 }));
 // Increase security by adding http headers
 app.use(helmet());
@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
     res.send('This page needs to be documented');
 });
 app.use('/auth', authRoute);
-// app.use('/tweets', tweetsRoute);
+app.use('/tweets', tweetsRoute);
 // app.use('/users', usersRoute);
 
 // connect MongoDB -> then start server

@@ -65,6 +65,18 @@ router.delete('/:id', userAuthentication.verifyToken, (req, res) => {
 });
 
 // Post a new tweet
-// router.post('/',)
+router.post('/', userAuthentication.verifyToken, (req, res) => {
+    try {
+        const newPost = new Tweet ({
+            text: req.body.text,
+            createdBy: req.user.id
+        });
+        newPost.save()
+            .then(result => res.status(201).json({ message: 'Tweet succesfully created', tweetContent: result }))
+            .catch(err => res.status(500).json({ message: 'Error occured in the DB', error: err }))
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
+})
 
 module.exports = router;
