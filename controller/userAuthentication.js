@@ -11,7 +11,7 @@ const signToken = (data) => {
     });
 };
 
-// SignUp Logic
+// ↓ Signup Logic ↓
 exports.signup = (req, res) => {
     // Check if passwords match
     if (req.body.password === req.body.passwordConfirm) {
@@ -43,18 +43,24 @@ exports.signup = (req, res) => {
     }
 };
 
-// Login Logic
+// ↓ Login Logic ↓
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        // #### LOGIN CHECKS ####
         // Check if Email or Password are empty
         if (!email || !password) {
-            res.status(404).json({ status: "fail", message: "Please provide email and password!" });
+            res.status(400).json({ status: "fail", message: "Please provide email and password!" });
         }
         const user = await User.findOne({ email: email });
-        // Check is User exists OR Passwords match
-        if (!user || await !bcrypt.compareSync(req.body.password, user.password)) {
-            res.status(401).json({ status: "fail", message: "Incorrect email or password OR user doesnot exist!" });
+        // Check if User exists
+        if (!user) {
+            res.status(404).json({ status: "fail", message: "User doesnot exist!" });
+        }
+        // Check if Passwords match
+        if (await !bcrypt.compareSync(req.body.password, user.password)) {
+            res.status(401).json({ status: "fail", message: "Incorrect password!" });
         }
 
         // Define payload data for JWT
@@ -63,14 +69,18 @@ exports.login = async (req, res) => {
             username: user.username,
             email: user.email
         }
+
         // Generate a token
         const token = signToken(jwt_data);
-        //ifenv
-        console.log("JWT Payload Data:\n", jwt_data)
         // Set the token in the Authorization header of the response
         res.set('Authorization', `Bearer ${token}`);
-        // Send response with token in Authorization header
-        res.status(200).json({ status: "Logged in successfully", jwt_token: token });
+
+        const successRes = { status: "success", message: "Logged in successfully" };
+        if (process.env.IS_DEV_ENV === "true") {
+            console.log("[login] JWT payload data:\n", jwt_data);
+            successRes.jwt_token = token;
+        }
+        res.status(200).json(successRes);
     } catch (err) {
         console.log(err);
     }
@@ -99,7 +109,9 @@ exports.verifyToken = async (req, res, next) => {
             });
 
         req.user = decoded;
-        console.log("🚀 ~ file: userAuthentication.js:97 ~ exports.verifyToken= ~ decoded:", decoded)
+        if (process.env.IS_DEV_ENV === "true") {
+            console.log("[verifyToken] Decoded JWT data:\n", decoded);
+        }
         next();
     } catch (err) {
         console.log(err);
